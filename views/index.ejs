@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Vulnerability Demo Application</h1>
+        <p>Explore and toggle vulnerabilities to observe their effects in real-time.</p>
+    </header>
+
+    <div class="card-container">
+        <div class="card">
+            <h2>Login (Broken Access Control)</h2>
+            <form method="POST" action="/login">
+                <input type="text" name="username" placeholder="Enter username">
+                <button type="submit">Login</button>
+            </form>
+            <% if (userId) { %>
+                <p>Your User ID: <strong><%= userId %></strong></p>
+            <% } %>
+        </div>
+        
+
+        <div class="card">
+            <h2>Search Users (SQL Injection)</h2>
+            <form method="POST" action="/search">
+                <input type="text" name="username" placeholder="Search by username">
+                <button type="submit">Search</button>
+            </form>
+            <div class="vulnerability-status">
+                <p>SQL Injection Status: <strong><%= sqlVulnerabilityEnabled ? 'Enabled' : 'Disabled' %></strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Access User Data (Broken Access Control)</h2>
+            <form method="GET" action="/user/2">
+                <button type="submit">Access User 1 Data (ID=2)</button>
+            </form>
+            <div class="card">
+                <h2>Admin-Only Section</h2>
+                <a href="/admin" target="_blank">
+                    <button>Go to Admin Page</button>
+                </a>
+            </div>            
+            <div class="vulnerability-status">
+                <p>BAC Status: <strong><%= bacVulnerabilityEnabled ? 'Enabled' : 'Disabled' %></strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Reflected XSS Demo</h2>
+            <form method="POST" action="/xss">
+                <input type="text" name="message" placeholder="Enter a message">
+                <button type="submit">Submit</button>
+            </form>
+            <h3>Your Message: <%- xssMessage %></h3>
+            <div class="vulnerability-status">
+                <p>XSS Status: <strong><%= xssVulnerabilityEnabled ? 'Enabled' : 'Disabled' %></strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Toggle Vulnerabilities</h2>
+            <form method="POST" action="/toggle-sql-vulnerability">
+                <button type="submit">Toggle SQL Injection</button>
+            </form>
+            <form method="POST" action="/toggle-bac-vulnerability">
+                <button type="submit">Toggle Broken Access Control</button>
+            </form>
+            <form method="POST" action="/toggle-xss-vulnerability">
+                <button type="submit">Toggle Reflected XSS</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
