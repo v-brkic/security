@@ -18,13 +18,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-const pool = new Pool({
+/*const pool = new Pool({
   host: 'localhost',
   user: 'postgres',
   password: 'bazepodataka',
   database: 'lab2security',
   port: 5432,
+});*/
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 });
+
 
 pool.connect((err, client, release) => {
   if (err) {
