@@ -1,3 +1,2 @@
-College task for laboratory
-It shows major vulnerabilities in which you can toggle their exploitability.
+College task for laboratory that shows major vulnerabilities in which you can toggle their exploitability.
 Deployed: https://security-ptjy.onrender.com
